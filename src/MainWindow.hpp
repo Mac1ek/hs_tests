@@ -4,6 +4,8 @@
 #include <QCheckBox>
 #include <QGridLayout>
 #include <QGroupBox>
+#include <QHBoxLayout>
+#include <QJsonDocument>
 #include <QLabel>
 #include <QMainWindow>
 #include <QMenu>
@@ -18,7 +20,7 @@
 class MainWindow : public QMainWindow {
   Q_OBJECT
 
- private:
+private:
   std::shared_ptr<QPushButton> select_test_btn;
   std::shared_ptr<QGridLayout> main_layout;
   std::vector<std::shared_ptr<QPushButton>> test_btn;
@@ -29,21 +31,38 @@ class MainWindow : public QMainWindow {
   std::shared_ptr<QMenu> menu_options;
   std::shared_ptr<QWidget> main_widget;
   std::shared_ptr<QLabel> label_logo;
+  std::shared_ptr<QMenu> btn_menu;
+  std::shared_ptr<QPushButton> main_btn;
+  std::shared_ptr<QWidget> main_test_widget;
+  std::shared_ptr<QJsonDocument> test_doc;
+  std::shared_ptr<QLabel> test_title;
+  std::shared_ptr<QGridLayout> test_grid_layout;
+  std::shared_ptr<QRadioButton> radio_test_button;
+  std::shared_ptr<QCheckBox> checkbox_test_button;
+  std::shared_ptr<QPushButton> btn_return;
+  std::shared_ptr<QHBoxLayout> box_la7yout;
 
- public:
+public:
   MainWindow(QWidget *parent = 0);
   ~MainWindow();
   auto showMainWindow() -> void;
   auto createMainWidgets() -> void;
   auto createMainLayout() -> void;
 
- private:
+private:
   auto connectActions() -> void;
   auto connectMenuFile() -> void;
   auto connectMenuOptions() -> void;
   auto connectMenuHelp() -> void;
- private slots:
+  auto createOneAnswerBox() -> void;
+  auto createMultipleAnswerBox() -> void;
+  auto prepareJsonTest(const QString &file) -> void;
+  auto parseJSON(const QJsonDocument &doc) -> void;
+  auto main() -> void;
+private slots:
   auto showAbout() -> void;
+  auto openTest() -> void;
+  auto returnToMain() -> void;
 };
 
 #endif
