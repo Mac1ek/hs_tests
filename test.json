@@ -1,0 +1,13 @@
+{
+  "TEST": {
+    "TEST_TITLE": "Wybrane algorytmy kompilacji",
+    "TEST_TIME": "40",
+    "questions": [
+      {
+        "type": "single",
+        "question": "PYTANIE 1",
+        "answer": true
+      }
+    ]
+  }
+}

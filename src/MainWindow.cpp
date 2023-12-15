@@ -125,8 +125,10 @@ auto MainWindow::parseJSON(const QJsonDocument &doc) -> void {
     qDebug() << test["TEST_TIME"].toString();
     QJsonArray jsonArray = obj["questions"].toArray();
     foreach (const QJsonValue &value, jsonArray) {
-      QJsonObject tmp_obj = value.toObject();
-      qDebug() << tmp_obj["type"].toString();
+      QJsonObject question = value.toObject();
+      qDebug() << question["type"].toString();
+      qDebug() << question["question"].toString();
+      qDebug() << question["answer"].toBool();
     }
   }
 }
