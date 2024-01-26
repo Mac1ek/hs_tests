@@ -21,7 +21,7 @@
 class MainWindow : public QMainWindow {
   Q_OBJECT
 
-private:
+ private:
   std::shared_ptr<QPushButton> select_test_btn;
   std::shared_ptr<QGridLayout> main_layout;
   std::vector<std::shared_ptr<QPushButton>> test_btn;
@@ -47,14 +47,14 @@ private:
 
   QTimer timer;
 
-public:
+ public:
   MainWindow(QWidget *parent = 0);
   ~MainWindow();
   auto showMainWindow() -> void;
   auto createMainWidgets() -> void;
   auto createMainLayout() -> void;
 
-private:
+ private:
   auto connectActions() -> void;
   auto connectMenuFile() -> void;
   auto connectMenuOptions() -> void;
@@ -64,7 +64,7 @@ private:
   auto prepareJsonTest(const QString &file) -> void;
   auto parseJSON(const QJsonDocument &doc) -> void;
   auto main() -> void;
-private slots:
+ private slots:
   auto showAbout() -> void;
   auto setMenuActions() -> void;
   auto createMenuItems() -> void;

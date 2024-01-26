@@ -125,6 +125,7 @@ auto MainWindow::parseJSON(const QJsonDocument &doc) -> void
     qDebug() << obj["PARAM_TITLE"].toString();
     qDebug() << obj["PARAM_TIME"].toString();
     QJsonArray jsonArray = obj["questions"].toArray();
+<<<<<<< HEAD
     foreach (const QJsonValue &value, jsonArray)
     {
       QJsonObject tmp_obj = value.toObject();
@@ -162,6 +163,13 @@ auto MainWindow::parseJSON(const QJsonDocument &doc) -> void
           qDebug() << question.keys()[0] << "ANSWER: " << question.take(question.keys()[0]).toString();
         }
       }
+=======
+    foreach (const QJsonValue &value, jsonArray) {
+      QJsonObject question = value.toObject();
+      qDebug() << question["type"].toString();
+      qDebug() << question["question"].toString();
+      qDebug() << question["answer"].toBool();
+>>>>>>> bd09ffc1b3e844b6273f692d2f716d8824dd4ba5
     }
   }
 }
