@@ -16,6 +16,7 @@
 #include <QTimer>
 #include <QWidget>
 #include <memory>
+#include "QuestionWidget.hpp"
 
 class MainWindow : public QMainWindow {
   Q_OBJECT
@@ -40,7 +41,11 @@ private:
   std::shared_ptr<QRadioButton> radio_test_button;
   std::shared_ptr<QCheckBox> checkbox_test_button;
   std::shared_ptr<QPushButton> btn_return;
-  std::shared_ptr<QHBoxLayout> box_la7yout;
+  std::shared_ptr<QHBoxLayout> box_layout;
+
+  std::vector<std::shared_ptr<QuestionWidget> > test_questions;
+
+  QTimer timer;
 
 public:
   MainWindow(QWidget *parent = 0);
@@ -61,6 +66,9 @@ private:
   auto main() -> void;
 private slots:
   auto showAbout() -> void;
+  auto setMenuActions() -> void;
+  auto createMenuItems() -> void;
+  auto createMenuBar() -> void;
   auto openTest() -> void;
   auto returnToMain() -> void;
 };

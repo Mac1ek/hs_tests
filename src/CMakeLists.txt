@@ -12,8 +12,7 @@ find_package(Qt6 REQUIRED COMPONENTS Core)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-add_executable(hs_test main.cpp MainWindow.cpp resources/resources.qrc
-)
+add_executable(hs_test main.cpp MainWindow.cpp QuestionWidget.cpp SingleQuestionWidget.cpp MultipleQuestionWidget.cpp MultipleQuestionImageWidget resources/resources.qrc)
 
 target_link_libraries(hs_test PRIVATE Qt6::Core)
 target_link_libraries(hs_test PRIVATE Qt6::Widgets)

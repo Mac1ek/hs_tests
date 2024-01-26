@@ -1,0 +1,16 @@
+#ifndef _SINGLE_QUESTION_WIDGET_HPP__
+#define _SINGLE_QUESTION_WIDGET_HPP__
+
+#include "QuestionWidget.hpp"
+#include <QWidget>
+
+class SingleQuestionWidget : private QuestionWidget
+{
+    QImage image;
+    Q_OBJECT
+public:
+    SingleQuestionWidget();
+    ~SingleQuestionWidget();
+};
+
+#endif
