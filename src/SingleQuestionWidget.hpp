@@ -6,8 +6,11 @@
 
 class SingleQuestionWidget : private QuestionWidget
 {
-    QImage image;
     Q_OBJECT
+
+private:
+    QImage image;
+
 public:
     SingleQuestionWidget();
     ~SingleQuestionWidget();

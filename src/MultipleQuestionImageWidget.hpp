@@ -1,34 +1,38 @@
 #ifndef _MULTIPLE_QUESTION_IMAGE_WIDGET_HPP__
 #define _MULTIPLE_QUESTION_IMAGE_WIDGET_HPP__
 
-#include "QuestionWidget.hpp"
+#include "MultipleQuestionWidget.hpp"
 #include <QWidget>
 #include <QGridLayout>
 #include <QCheckBox>
+#include <QPushButton>
 #include <QLabel>
 #include <vector>
 
-class MultipleQuestionImageWidget: public QuestionWidget {
+class MultipleQuestionImageWidget : public MultipleQuestionWidget
+{
     Q_OBJECT
+
+private:
     QPixmap image;
-    QGridLayout* layout;
-    std::vector<std::pair<QLabel, QCheckBox> > answers;
-    public:
-    MultipleQuestionImageWidget(std::vector<QString>& q) {
-        this->layout = new QGridLayout();
-        this->create_widgets(q);
-    }
-    const MultipleQuestionImageWidget& get_widget() {
-        return *this;
-    }
-    void create_widgets(std::vector<QString>&q) {
-        for(unsigned int i = 0; i< q.size(); ++i) {
-            QLabel* l = new QLabel(q[i]);
-            layout->addWidget(l, i, 0);
-            QCheckBox* box = new QCheckBox();
-            layout->addWidget(box, i, 1);
-        }
-    }
+
+    std::vector<std::pair<QLabel *, QCheckBox *>> questions;
+
+    QLabel *label_image;
+
+    auto create_layout() -> void;
+    auto create_widgets() -> void;
+
+public:
+    MultipleQuestionImageWidget(QString);
+    ~MultipleQuestionImageWidget();
+
+    auto add_title(const QString &) -> void;
+    auto add_question(const QString &) -> void;
+    auto get_answers() -> std::vector<QString> &;
+
+private slots:
+    auto setAnswer(bool) -> void;
 };
 
 #endif

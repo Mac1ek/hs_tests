@@ -13,64 +13,83 @@
 #include <QPushButton>
 #include <QRadioButton>
 #include <QSplashScreen>
+#include <QStackedWidget>
+#include <QStatusBar>
 #include <QTimer>
 #include <QWidget>
-#include <memory>
+#include <random>
 #include "QuestionWidget.hpp"
+#include "TestWidget.hpp"
 
-class MainWindow : public QMainWindow {
+class MainWindow : public QMainWindow
+{
+
   Q_OBJECT
 
- private:
-  std::shared_ptr<QPushButton> select_test_btn;
-  std::shared_ptr<QGridLayout> main_layout;
-  std::vector<std::shared_ptr<QPushButton>> test_btn;
-  std::shared_ptr<QGroupBox> group_question;
-  std::shared_ptr<QMenuBar> menu_bar;
-  std::shared_ptr<QMenu> menu_file;
-  std::shared_ptr<QMenu> menu_help;
-  std::shared_ptr<QMenu> menu_options;
-  std::shared_ptr<QWidget> main_widget;
-  std::shared_ptr<QLabel> label_logo;
-  std::shared_ptr<QMenu> btn_menu;
-  std::shared_ptr<QPushButton> main_btn;
-  std::shared_ptr<QWidget> main_test_widget;
-  std::shared_ptr<QJsonDocument> test_doc;
-  std::shared_ptr<QLabel> test_title;
-  std::shared_ptr<QGridLayout> test_grid_layout;
-  std::shared_ptr<QRadioButton> radio_test_button;
-  std::shared_ptr<QCheckBox> checkbox_test_button;
-  std::shared_ptr<QPushButton> btn_return;
-  std::shared_ptr<QHBoxLayout> box_layout;
+private:
+  QSplashScreen *splash_screen;
+  QPushButton *select_test_btn;
+  QGridLayout *main_layout;
+  std::vector<QPushButton *> test_btn;
+  QGroupBox *group_question;
+  QMenuBar *menu_bar;
+  QMenu *menu_file;
+  QMenu *menu_help;
+  QMenu *menu_options;
+  QWidget *main_widget;
+  QLabel *label_logo;
+  QMenu *btn_menu;
+  QPushButton *main_btn;
+  QWidget *main_test_widget;
+  QJsonDocument *test_doc;
+  QLabel *test_title;
+  QGridLayout *test_grid_layout;
+  QRadioButton *radio_test_button;
+  QCheckBox *checkbox_test_button;
+  TestWidget *test_widget;
+  QStackedWidget *stacketTestWidget;
+  QStatusBar *statusBar;
+  std::vector<std::pair<QString, QString>> answers;
 
-  std::vector<std::shared_ptr<QuestionWidget> > test_questions;
+  QTimer *timer;
+  unsigned int countdown;
 
-  QTimer timer;
-
- public:
+public:
   MainWindow(QWidget *parent = 0);
   ~MainWindow();
   auto showMainWindow() -> void;
+
+private:
   auto createMainWidgets() -> void;
   auto createMainLayout() -> void;
-
- private:
   auto connectActions() -> void;
   auto connectMenuFile() -> void;
   auto connectMenuOptions() -> void;
   auto connectMenuHelp() -> void;
+  auto connectTestButton() -> void;
   auto createOneAnswerBox() -> void;
   auto createMultipleAnswerBox() -> void;
-  auto prepareJsonTest(const QString &file) -> void;
-  auto parseJSON(const QJsonDocument &doc) -> void;
-  auto main() -> void;
- private slots:
+  auto prepareTestJson(const QString &) -> void;
+  auto prepareTestWindow() -> void;
+  auto parseJSON(const QJsonDocument &) -> bool;
+  auto mainApp() -> void;
+  auto formatTime(int) -> QString;
+  auto addMultipleQuestionWidget(const QJsonObject &, std::default_random_engine &) -> void;
+  auto addMultipleQuestionImageWidget(const QJsonObject &, std::default_random_engine &) -> void;
+  auto addSingleQuestionImageWidget(const QJsonObject &, std::default_random_engine &) -> void;
+  auto showSplashScreen() -> void;
+
+public slots:
+
   auto showAbout() -> void;
-  auto setMenuActions() -> void;
+  auto showAboutQt() -> void;
+  auto createMenuActions() -> void;
   auto createMenuItems() -> void;
   auto createMenuBar() -> void;
   auto openTest() -> void;
   auto returnToMain() -> void;
+  auto updateTimer() -> void;
+  auto quitApp() -> void;
 };
 
 #endif

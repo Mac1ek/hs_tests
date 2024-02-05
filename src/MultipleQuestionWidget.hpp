@@ -6,24 +6,26 @@
 #include <QCheckBox>
 #include <QGridLayout>
 #include <QLabel>
+#include <QPushButton>
 
-class MultipleQuestionWidget : public QuestionWidget {
-
-private:
-    std::vector<std::pair<std::shared_ptr<QLabel>, std::shared_ptr<QCheckBox> > > questions;
-
-    std::shared_ptr<QGridLayout> mainLayout;
+class MultipleQuestionWidget : public QuestionWidget
+{
+    Q_OBJECT
 
 public:
-    Q_OBJECT
+    auto create_layout() -> void;
+    auto create_widgets() -> void;
 
 public:
     MultipleQuestionWidget();
     ~MultipleQuestionWidget();
 
-    void add_question(const QString& q);
-    void create_layout();
+    auto add_title(const QString &) -> void;
+    auto add_question(const QString &) -> void;
+    auto get_answers() -> std::vector<QString> &;
 
+private slots:
+    auto setAnswer(bool) -> void;
 };
 
 #endif

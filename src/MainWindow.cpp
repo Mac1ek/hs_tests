@@ -1,64 +1,83 @@
 #include "MainWindow.hpp"
+#include "MultipleQuestionWidget.hpp"
+#include "MultipleQuestionImageWidget.hpp"
+#include "version.hpp"
 
 #include <QApplication>
 #include <QFileDialog>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonParseError>
+#include <QMessageBox>
+#include <QScrollArea>
+#include <QSizePolicy>
+#include <QScrollBar>
+#include <QThread>
 #include <windows.h>
-#include "MultipleQuestionWidget.hpp"
+#include <vector>
+#include <random>
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {}
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
+{
+  test_widget = nullptr;
+  this->timer = new QTimer();
+}
 
 MainWindow::~MainWindow() {}
 
 auto MainWindow::showMainWindow() -> void
 {
-  QPixmap pixmap(tr(":/images/logo.png"));
-  std::shared_ptr<QSplashScreen> screen(new QSplashScreen(pixmap));
-  screen->show();
-  Sleep(1000);
+  this->showSplashScreen();
   this->createMainWidgets();
   this->createMainLayout();
-  this->setCentralWidget(this->main_widget.get());
-  this->resize(800, 600);
   this->connectActions();
+  this->setCentralWidget(this->main_widget);
+  QThread::msleep(1000);
+  delete this->splash_screen;
+  this->splash_screen = nullptr;
   this->show();
+}
+
+auto MainWindow::showSplashScreen() -> void
+{
+  QPixmap pixmap(tr(":/images/logo.png"));
+  this->splash_screen = new QSplashScreen(pixmap);
+  this->splash_screen->show();
 }
 
 auto MainWindow::createMainWidgets() -> void
 {
   this->createMenuItems();
-  this->setMenuActions();
+  this->createMenuActions();
   this->createMenuBar();
 
   QPixmap pixmap(tr(":/images/logo.png"));
-  this->label_logo.reset(new QLabel(this));
+  this->test_widget = new TestWidget(this->timer);
+  this->label_logo = new QLabel(this);
   this->label_logo->setPixmap(pixmap);
-  this->main_btn.reset(new QPushButton("What we do ?", this));
-  this->btn_menu.reset(new QMenu());
-  this->btn_menu->addAction("Open test");
-  this->btn_menu->addAction("Show log");
-  this->btn_menu->addAction("Exit");
-  this->main_btn->setMenu(this->btn_menu.get());
-  this->main_widget.reset(new QWidget);
-  this->setMenuBar(this->menu_bar.get());
-  this->test_title.reset(new QLabel(""));
-  this->main_test_widget.reset(new QWidget);
-  this->btn_return.reset(new QPushButton(tr("Return")));
-  // this->test_grid_layout.reset(new QGridLayout());
-  // this->test_grid_layout->addWidget(this->test_title.get(), 0, 0,
-  //                                   Qt::AlignHCenter);
-  this->connect(this->btn_return.get(), SIGNAL(clicked()), this, SLOT(returnToMain()));
-  // this->main_test_widget->setLayout(this->test_grid_layout.get());
+  this->main_btn = new QPushButton("Co robimy ?", this);
+  this->btn_menu = new QMenu();
+  this->btn_menu->addAction("Otwórz test");
+  this->btn_menu->addAction("Pokaż log");
+  this->btn_menu->addAction("Kończymy");
+  this->main_btn->setMenu(this->btn_menu);
+  this->main_widget = new QWidget();
+
+  this->setMenuBar(this->menu_bar);
+
+  this->test_title = new QLabel("");
+  this->main_test_widget = new QWidget();
+  this->statusBar = new QStatusBar();
+
+  this->setStatusBar(this->statusBar);
 }
 
 auto MainWindow::createMainLayout() -> void
 {
-  this->main_layout.reset(new QGridLayout);
-  this->main_layout->addWidget(this->label_logo.get(), 0, 0, Qt::AlignHCenter);
-  this->main_layout->addWidget(this->main_btn.get(), 1, 0, Qt::AlignTop | Qt::AlignHCenter);
-  this->main_widget->setLayout(this->main_layout.get());
+  this->main_layout = new QGridLayout();
+  this->main_layout->addWidget(this->label_logo, 0, 0, Qt::AlignHCenter);
+  this->main_layout->addWidget(this->main_btn, 1, 0, Qt::AlignTop | Qt::AlignHCenter);
+  this->main_widget->setLayout(this->main_layout);
 }
 
 auto MainWindow::connectActions() -> void
@@ -66,141 +85,271 @@ auto MainWindow::connectActions() -> void
   this->connectMenuFile();
   this->connectMenuOptions();
   this->connectMenuHelp();
+  this->connectTestButton();
 }
-auto MainWindow::connectMenuFile() -> void {}
+auto MainWindow::connectMenuFile() -> void
+{
+  this->connect(this->menu_file->actions()[2], SIGNAL(triggered()), this, SLOT(close()));
+  this->connect(this->menu_file->actions()[3], SIGNAL(triggered()), this, SLOT(returnToMain()));
+}
 
-auto MainWindow::connectMenuOptions() -> void {}
+auto MainWindow::connectMenuOptions() -> void
+{
+  connect(timer, &QTimer::timeout, this, &MainWindow::updateTimer);
+}
 
 auto MainWindow::connectMenuHelp() -> void
 {
-  this->connect(this->menu_file->actions()[2], SIGNAL(triggered()), this,
-                SLOT(close()));
-  this->connect(this->menu_help->actions()[1], SIGNAL(triggered()), this,
-                SLOT(showAbout()));
-  this->connect(this->btn_menu->actions()[0], SIGNAL(triggered()), this,
-                SLOT(openTest()));
+  this->connect(this->menu_help->actions()[0], SIGNAL(triggered()), this, SLOT(showAbout()));
+  this->connect(this->menu_help->actions()[1], SIGNAL(triggered()), this, SLOT(showAboutQt()));
 }
 
-auto MainWindow::showAbout() -> void { qApp->aboutQt(); }
+auto MainWindow::connectTestButton() -> void
+{
+  this->connect(this->btn_menu->actions()[0], SIGNAL(triggered()), this, SLOT(openTest()));
+  this->connect(this->btn_menu->actions()[2], SIGNAL(triggered()), this, SLOT(quitApp()));
+}
+
+auto MainWindow::quitApp() -> void
+{
+  this->close();
+}
+
+auto MainWindow::showAbout() -> void
+{
+  QMessageBox::about(this, tr("version %1").arg(HS_TEST_VERSION), tr("%1").arg(HS_TEST_VERSION_INFO));
+}
+
+auto MainWindow::showAboutQt() -> void { qApp->aboutQt(); }
 
 auto MainWindow::openTest() -> void
 {
-  QFileDialog dlg(this, "Open test", "./", "json test file (*.json)");
-  this->prepareJsonTest(dlg.getOpenFileName());
+  QString test_file = QFileDialog::getOpenFileName(this, "Wybierz test: ", QDir::currentPath(), "Test (*.json);;All files (*)");
+  if (!test_file.isEmpty())
+    this->prepareTestJson(test_file);
 }
 
-auto MainWindow::createOneAnswerBox() -> void {}
-
-auto MainWindow::createMultipleAnswerBox() -> void {}
-
-auto MainWindow::prepareJsonTest(const QString &file) -> void
+auto MainWindow::prepareTestJson(const QString &file) -> void
 {
   QFile test(file);
+
   if (test.open(QFile::ReadOnly))
   {
-    this->test_doc.reset(new QJsonDocument());
+    this->test_doc = new QJsonDocument();
+
     QJsonParseError error;
     QJsonDocument doc = QJsonDocument::fromJson(test.readAll(), &error);
+
     if (error.error != QJsonParseError::NoError)
     {
       this->test_title->setText(error.errorString());
-      this->takeCentralWidget();
-      this->setCentralWidget(this->main_test_widget.get());
+      this->setCentralWidget(this->main_test_widget);
     }
     else
     {
       QJsonObject jsonObj = doc.object();
-      this->parseJSON(doc);
-      this->setWindowTitle("PARSER OK!");
-      this->setCentralWidget(this->test_questions[0].get());
+      if (this->parseJSON(doc))
+      {
+        this->prepareTestWindow();
+      }
     }
   }
 }
 
-auto MainWindow::parseJSON(const QJsonDocument &doc) -> void
+auto MainWindow::prepareTestWindow() -> void
+{
+  QScrollArea *scrollArea = new QScrollArea();
+  scrollArea->setWidgetResizable(true);
+  this->test_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  scrollArea->setWidget(this->test_widget);
+
+  scrollArea->verticalScrollBar()->setStyleSheet("QScrollBar:vertical {"
+                                                 "    border: 1px solid grey;"
+                                                 "    background: lightgrey;"
+                                                 "    width: 15px;"
+                                                 "    margin: 0 0 0 0;"
+                                                 "}");
+
+  scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  this->test_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  scrollArea->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+
+  this->setCentralWidget(scrollArea);
+  this->resize(scrollArea->widget()->sizeHint());
+}
+
+auto MainWindow::addMultipleQuestionWidget(const QJsonObject &test_obj, std::default_random_engine &rand_engine) -> void
+{
+  std::vector<QJsonObject> quest_block;
+  foreach (const QJsonValue &value, test_obj["quests"].toArray())
+  {
+    QJsonObject question = value.toObject();
+    quest_block.push_back(question);
+  }
+
+  std::shuffle(quest_block.begin(), quest_block.end(), rand_engine);
+
+  QuestionWidget *questions = new MultipleQuestionWidget();
+  questions->add_title(test_obj["title"].toString());
+
+  for (QJsonObject question : quest_block)
+  {
+    questions->add_question(question.keys()[0]);
+    this->answers.push_back(std::make_pair(tr("FALSE"), question.take(question.keys()[0]).toString()));
+  }
+
+  this->test_widget->store_answers(this->answers);
+  this->answers.clear();
+  questions->create_layout();
+  this->test_widget->add_questionBlock(questions);
+}
+
+auto MainWindow::addMultipleQuestionImageWidget(const QJsonObject &test_obj, std::default_random_engine &rand_engine) -> void
+{
+  std::vector<QJsonObject> quest_block;
+  foreach (const QJsonValue &value, test_obj["quests"].toArray())
+  {
+    QJsonObject question = value.toObject();
+    quest_block.push_back(question);
+  }
+  std::shuffle(quest_block.begin(), quest_block.end(), rand_engine);
+
+  QuestionWidget *questions = new MultipleQuestionImageWidget(test_obj["image"].toString());
+  questions->add_title(test_obj["title"].toString());
+
+  for (QJsonObject question : quest_block)
+  {
+    questions->add_question(question.keys()[0]);
+    this->answers.push_back(std::make_pair(tr("FALSE"), question.take(question.keys()[0]).toString()));
+  }
+
+  this->test_widget->store_answers(this->answers);
+  this->answers.clear();
+  questions->create_layout();
+  this->test_widget->add_questionBlock(questions);
+}
+
+auto MainWindow::parseJSON(const QJsonDocument &doc) -> bool
 {
   if (doc.isObject())
   {
     QJsonObject obj = doc.object();
-    qDebug() << obj["PARAM_TITLE"].toString();
-    qDebug() << obj["PARAM_TIME"].toString();
+    this->setWindowTitle(tr("STRUKTURA TESTU OK: %1").arg(obj["PARAM_TITLE"].toString()));
+    this->test_widget->createStartPage(obj["PARAM_TITLE"].toString(), obj["PARAM_TIME"].toString());
+    this->countdown = obj["PARAM_TIME"].toString().toUInt() * 60;
+
     QJsonArray jsonArray = obj["questions"].toArray();
-<<<<<<< HEAD
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine rand_engine(seed);
+
     foreach (const QJsonValue &value, jsonArray)
     {
-      QJsonObject tmp_obj = value.toObject();
-      qDebug() << tmp_obj["type"].toString();
-      if (tmp_obj["type"] == "multiple")
+      QJsonObject test_obj = value.toObject();
+      if (test_obj["type"] == "multiple")
       {
-        std::shared_ptr<QuestionWidget> questions;
-        questions.reset(new MultipleQuestionWidget());
-        qDebug() << "MULTIPLE ANSWERS: \n";
-        foreach (const QJsonValue &value, tmp_obj["quests"].toArray())
-        {
-          QJsonObject question = value.toObject();
-          questions->add_question(question.keys()[0]);
-          qDebug() << question.keys()[0] << "ANSWER: " << question.take(question.keys()[0]).toString();
-        }
-        questions->create_layout();
-        this->test_questions.push_back(questions);
+        this->addMultipleQuestionWidget(test_obj, rand_engine);
       }
-      if (tmp_obj["type"] == "single")
+      else if (test_obj["type"] == "multiple_image")
       {
-        qDebug() << "SINGLE ANSWER: \n";
-        foreach (const QJsonValue &value, tmp_obj["quests"].toArray())
-        {
-          QJsonObject question = value.toObject();
-          qDebug() << question.keys()[0] << "ANSWER: " << question.take(question.keys()[0]).toString();
-        }
+        this->addMultipleQuestionImageWidget(test_obj, rand_engine);
       }
-      if (tmp_obj["type"] == "multiple_image")
+      else if (test_obj["type"] == "single")
       {
-        qDebug() << "MULTIPLE IMAGE ANSWERS: \n";
-        qDebug() << tmp_obj["image"];
-        foreach (const QJsonValue &value, tmp_obj["quests"].toArray())
-        {
-          QJsonObject question = value.toObject();
-          qDebug() << question.keys()[0] << "ANSWER: " << question.take(question.keys()[0]).toString();
-        }
+        this->addSingleQuestionImageWidget(test_obj, rand_engine);
       }
-=======
-    foreach (const QJsonValue &value, jsonArray) {
-      QJsonObject question = value.toObject();
-      qDebug() << question["type"].toString();
-      qDebug() << question["question"].toString();
-      qDebug() << question["answer"].toBool();
->>>>>>> bd09ffc1b3e844b6273f692d2f716d8824dd4ba5
+      else {
+        return false;
+      }
     }
+    return true;
+  }
+  else
+  {
+    return false;
   }
 }
 
-auto MainWindow::main() -> void
+auto MainWindow::addSingleQuestionImageWidget(const QJsonObject &test_obj, std::default_random_engine &rand_engine) -> void
 {
-  this->setCentralWidget(this->main_widget.get());
+  // TODO
+  foreach (const QJsonValue &value, test_obj["quests"].toArray())
+  {
+    QJsonObject question = value.toObject();
+  }
 }
-auto MainWindow::returnToMain() -> void { this->main(); }
 
-auto MainWindow::setMenuActions() -> void
+auto MainWindow::updateTimer() -> void
 {
-  this->menu_file->addAction("OPEN TEST");
-  this->menu_file->addAction("SAVE RESULT");
-  this->menu_file->addAction("QUIT");
-  this->menu_options->addAction("OPEN OPTIONS");
-  this->menu_help->addAction("ABOUT");
+  if (countdown == 0)
+  {
+    this->timer->stop();
+    this->statusBar->showMessage("Czas się skończył!");
+    qApp->beep();
+    this->test_widget->test_end_now();
+  }
+  else
+  {
+    --countdown;
+    this->statusBar->showMessage("Czas: " + this->formatTime(countdown));
+  }
+}
+
+auto MainWindow::formatTime(int seconds) -> QString
+{
+  QTime time(0, 0, 0);
+  time = time.addSecs(seconds);
+  return time.toString("mm:ss");
+}
+
+auto MainWindow::returnToMain() -> void
+{
+  if (this->test_widget != nullptr)
+  {
+    delete test_widget;
+    test_widget = nullptr;
+  }
+  this->timer->stop();
+  QPixmap pixmap(tr(":/images/logo.png"));
+  this->test_widget = new TestWidget(this->timer);
+  this->label_logo = new QLabel(this);
+  this->label_logo->setPixmap(pixmap);
+  this->main_btn = new QPushButton("Co robimy ?", this);
+  this->btn_menu = new QMenu();
+  this->btn_menu->addAction("Otwórz test");
+  this->btn_menu->addAction("Pokaż log");
+  this->btn_menu->addAction("Kończymy");
+  this->main_btn->setMenu(this->btn_menu);
+  this->main_widget = new QWidget();
+  this->main_layout = new QGridLayout();
+  this->main_layout->addWidget(this->label_logo, 0, 0, Qt::AlignHCenter);
+  this->main_layout->addWidget(this->main_btn, 1, 0, Qt::AlignTop | Qt::AlignHCenter);
+  this->main_widget->setLayout(this->main_layout);
+  this->setCentralWidget(this->main_widget);
+  this->connectTestButton();
+}
+
+auto MainWindow::createMenuActions() -> void
+{
+  this->menu_file->addAction("OTWÓRZ TEST");
+  this->menu_file->addAction("ZAPISZ WYNIK");
+  this->menu_file->addAction("ZAKOŃCZ");
+  this->menu_file->addAction("ZRESETUJ TEST");
+  this->menu_options->addAction("OPCJE");
+  this->menu_help->addAction("O PROGRAMIE");
   this->menu_help->addAction("ABOUT QT");
 }
 
 auto MainWindow::createMenuItems() -> void
 {
-  this->menu_bar.reset(new QMenuBar(this));
-  this->menu_file.reset(new QMenu("FILE", this));
-  this->menu_options.reset(new QMenu("OPTIONS", this));
-  this->menu_help.reset(new QMenu("HELP", this));
+  this->menu_bar = new QMenuBar(this);
+  this->menu_file = new QMenu("PLIK", this);
+  this->menu_options = new QMenu("OPCJE", this);
+  this->menu_help = new QMenu("POMOC", this);
 }
 
 auto MainWindow::createMenuBar() -> void
 {
-  this->menu_bar->addMenu(this->menu_file.get());
-  this->menu_bar->addMenu(this->menu_options.get());
-  this->menu_bar->addMenu(this->menu_help.get());
+  this->menu_bar->addMenu(this->menu_file);
+  this->menu_bar->addMenu(this->menu_options);
+  this->menu_bar->addMenu(this->menu_help);
 }
