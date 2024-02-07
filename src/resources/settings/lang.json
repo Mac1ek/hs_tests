@@ -62,6 +62,45 @@
         },
         {
             "phrase_21": "TIME"
+        },
+        {
+            "phrase_22": "OPEN TEST FILE"
+        },
+        {
+            "phrase_23": "SAVE RESULT"
+        },
+        {
+            "phrase_24": "END"
+        },
+        {
+            "phrase_25": "RESET"
+        },
+        {
+            "phrase_26": "OPTIONS"
+        },
+        {
+            "phrase_27": "ABOUT"
+        },
+        {
+            "phrase_28": "ABOUT QT"
+        },
+        {
+            "phrase_29": "FILE"
+        },
+        {
+            "phrase_30": "OPTIONS"
+        },
+        {
+            "phrase_31": "HELP"
+        },
+        {
+            "phrase_32": "SAVE OPTIONS"
+        },
+        {
+            "phrase_33": "SELECT APPLICATION LANGUAGE"
+        },
+        {
+            "phrase_34": "YOU NEED RESTART APPLICATION"
         }
     ],
     "pl": [
@@ -127,6 +166,45 @@
         },
         {
             "phrase_21": "CZAS"
+        },
+        {
+            "phrase_22": "OTWÓRZ TEST"
+        },
+        {
+            "phrase_23": "ZAPISZ WYNIK"
+        },
+        {
+            "phrase_24": "ZAKOŃCZ"
+        },
+        {
+            "phrase_25": "RESETUJ"
+        },
+        {
+            "phrase_26": "OPCJE"
+        },
+        {
+            "phrase_27": "O PROGRAMIE"
+        },
+        {
+            "phrase_28": "ABOUT QT"
+        },
+        {
+            "phrase_29": "PLIK"
+        },
+        {
+            "phrase_30": "OPCJE"
+        },
+        {
+            "phrase_31": "POMOC"
+        },
+        {
+            "phrase_32": "ZAPISZ USTAWIENIA"
+        },
+        {
+            "phrase_33": "WYBIERZ JĘZYK APLIKACJI"
+        },
+        {
+            "phrase_34": "ABY ZASTOSOWAĆ ZMIANY ZRESTARTUJ APLIKACJE"
         }
     ]
 }

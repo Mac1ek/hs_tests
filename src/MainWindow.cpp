@@ -1,6 +1,7 @@
 #include "MainWindow.hpp"
 #include "MultipleQuestionWidget.hpp"
 #include "MultipleQuestionImageWidget.hpp"
+#include "OptionWidget.hpp"
 #include "version.hpp"
 
 #include <QApplication>
@@ -112,6 +113,7 @@ auto MainWindow::connectMenuFile() -> void
 
 auto MainWindow::connectMenuOptions() -> void
 {
+  connect(this->menu_options->actions()[0], SIGNAL(triggered()), this, SLOT(showOptions()));
   connect(timer, &QTimer::timeout, this, &MainWindow::updateTimer);
 }
 
@@ -348,21 +350,21 @@ auto MainWindow::returnToMain() -> void
 
 auto MainWindow::createMenuActions() -> void
 {
-  this->menu_file->addAction("OTWÓRZ TEST");
-  this->menu_file->addAction("ZAPISZ WYNIK");
-  this->menu_file->addAction("ZAKOŃCZ");
-  this->menu_file->addAction("ZRESETUJ TEST");
-  this->menu_options->addAction("OPCJE");
-  this->menu_help->addAction("O PROGRAMIE");
-  this->menu_help->addAction("ABOUT QT");
+  this->menu_file->addAction(this->translation.get_phrase("phrase_22"));
+  this->menu_file->addAction(this->translation.get_phrase("phrase_23"));
+  this->menu_file->addAction(this->translation.get_phrase("phrase_24"));
+  this->menu_file->addAction(this->translation.get_phrase("phrase_25"));
+  this->menu_options->addAction(this->translation.get_phrase("phrase_26"));
+  this->menu_help->addAction(this->translation.get_phrase("phrase_27"));
+  this->menu_help->addAction(this->translation.get_phrase("phrase_28"));
 }
 
 auto MainWindow::createMenuItems() -> void
 {
   this->menu_bar = new QMenuBar(this);
-  this->menu_file = new QMenu("PLIK", this);
-  this->menu_options = new QMenu("OPCJE", this);
-  this->menu_help = new QMenu("POMOC", this);
+  this->menu_file = new QMenu(this->translation.get_phrase("phrase_29"), this);
+  this->menu_options = new QMenu(this->translation.get_phrase("phrase_30"), this);
+  this->menu_help = new QMenu(this->translation.get_phrase("phrase_31"), this);
 }
 
 auto MainWindow::createMenuBar() -> void
@@ -370,4 +372,10 @@ auto MainWindow::createMenuBar() -> void
   this->menu_bar->addMenu(this->menu_file);
   this->menu_bar->addMenu(this->menu_options);
   this->menu_bar->addMenu(this->menu_help);
+}
+
+auto MainWindow::showOptions() -> void
+{
+  OptionWidget *w = new OptionWidget(nullptr, this->translation);
+  w->show();
 }

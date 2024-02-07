@@ -94,6 +94,7 @@ public slots:
   auto returnToMain() -> void;
   auto updateTimer() -> void;
   auto quitApp() -> void;
+  auto showOptions() -> void;
 };
 
 #endif
