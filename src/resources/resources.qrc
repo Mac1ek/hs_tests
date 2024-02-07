@@ -1,11 +1,6 @@
 <!DOCTYPE RCC><RCC version="1.0">
     <qresource>
         <file>images/logo.png</file>
-        <file>images/graf_q_no_1.png</file>
-        <file>images/graf_q_no_2.png</file>
-        <file>images/graf_q_no_3.png</file>
-        <file>images/graf_q_no_4.png</file>
-        <file>images/graf_q_no_5.png</file>
         <file>settings/lang.json</file>
     </qresource>
 </RCC>
