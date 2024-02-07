@@ -6,5 +6,6 @@
         <file>images/graf_q_no_3.png</file>
         <file>images/graf_q_no_4.png</file>
         <file>images/graf_q_no_5.png</file>
+        <file>settings/lang.json</file>
     </qresource>
 </RCC>

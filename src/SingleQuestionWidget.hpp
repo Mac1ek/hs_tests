@@ -4,9 +4,8 @@
 #include "QuestionWidget.hpp"
 #include <QWidget>
 
-class SingleQuestionWidget : private QuestionWidget
+class SingleQuestionWidget : virtual public QuestionWidget
 {
-    Q_OBJECT
 
 private:
     QImage image;

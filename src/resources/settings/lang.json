@@ -1,0 +1,132 @@
+{
+    "en": [
+        {
+            "phrase_1": "What we doing?"
+        },
+        {
+            "phrase_2": "Open test"
+        },
+        {
+            "phrase_3": "Open log"
+        },
+        {
+            "phrase_4": "Quit"
+        },
+        {
+            "phrase_5": "Select test: "
+        },
+        {
+            "phrase_6": "All files"
+        },
+        {
+            "phrase_7": "Version"
+        },
+        {
+            "phrase_8": "TEST STRUCTURE OK"
+        },
+        {
+            "phrase_9": "QUESTIONS NUMBER"
+        },
+        {
+            "phrase_10": "CORRECT ANSWERS NUMBER"
+        },
+        {
+            "phrase_11": "INCORRECT ANSWERS NUMBER"
+        },
+        {
+            "phrase_12": "START TEST"
+        },
+        {
+            "phrase_13": "NEXT QUESTION"
+        },
+        {
+            "phrase_14": "TEST TIME"
+        },
+        {
+            "phrase_15": "MINUTES"
+        },
+        {
+            "phrase_16": "TEST SOLUTION CONTAINT"
+        },
+        {
+            "phrase_17": "CORRECT QUESTIONS"
+        },
+        {
+            "phrase_18": "YOU ANSWER FOR"
+        },
+        {
+            "phrase_19": "PERCENT CORRECT QUESTIONS"
+        },
+        {
+            "phrase_20": "TIMER OVER"
+        },
+        {
+            "phrase_21": "TIME"
+        }
+    ],
+    "pl": [
+        {
+            "phrase_1": "Co robimy?"
+        },
+        {
+            "phrase_2": "Otwórz test"
+        },
+        {
+            "phrase_3": "Otwórz log"
+        },
+        {
+            "phrase_4": "Kończymy"
+        },
+        {
+            "phrase_5": "Wybierz test: "
+        },
+        {
+            "phrase_6": "Wszystkie pliki"
+        },
+        {
+            "phrase_7": "Wersja"
+        },
+        {
+            "phrase_8": "STRUKTURA TESTU OK"
+        },
+        {
+            "phrase_9": "ILOŚĆ PYTAŃ"
+        },
+        {
+            "phrase_10": "ILOŚĆ POPRAWNYCH ODPOWIEDZI"
+        },
+        {
+            "phrase_11": "ILOŚĆ NIEPOPRAWNYCH ODPOWIEDZI"
+        },
+        {
+            "phrase_12": "ROZPOCZNIJ TEST"
+        },
+        {
+            "phrase_13": "NASTĘPNE PYTANIE"
+        },
+        {
+            "phrase_14": "CZAS TESTU"
+        },
+        {
+            "phrase_15": "MINUT"
+        },
+        {
+            "phrase_16": "W TEŚCIE ZNAJDOWAŁO SIĘ"
+        },
+        {
+            "phrase_17": "POPRAWNYCH ODPOWIEDZI"
+        },
+        {
+            "phrase_18": "ODPOWIEDZIAŁEŚ NA"
+        },
+        {
+            "phrase_19": "PROCENT POPRAWNYCH ODPOWIEDZI"
+        },
+        {
+            "phrase_20": "CZAS SIĘ SKOŃCZYŁ"
+        },
+        {
+            "phrase_21": "CZAS"
+        }
+    ]
+}

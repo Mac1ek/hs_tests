@@ -13,28 +13,43 @@
 #include <QSizePolicy>
 #include <QScrollBar>
 #include <QThread>
-#include <windows.h>
 #include <vector>
 #include <random>
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), translation("pl"), settings("./settings.json")
 {
+  this->load_settings();
   test_widget = nullptr;
   this->timer = new QTimer();
+}
+
+auto MainWindow::load_settings() -> void
+{
+  if (this->settings.open(QIODevice::ReadWrite))
+  {
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson(this->settings.readAll(), &error);
+    if (error.error != QJsonParseError::NoError)
+    {
+      return;
+    }
+    else
+    {
+      QJsonObject setup = doc.object();
+      this->translation.set_lang(setup["set_lang"].toString());
+    }
+  }
 }
 
 MainWindow::~MainWindow() {}
 
 auto MainWindow::showMainWindow() -> void
 {
-  this->showSplashScreen();
   this->createMainWidgets();
   this->createMainLayout();
   this->connectActions();
   this->setCentralWidget(this->main_widget);
-  QThread::msleep(1000);
-  delete this->splash_screen;
-  this->splash_screen = nullptr;
+  this->showSplashScreen();
   this->show();
 }
 
@@ -43,6 +58,8 @@ auto MainWindow::showSplashScreen() -> void
   QPixmap pixmap(tr(":/images/logo.png"));
   this->splash_screen = new QSplashScreen(pixmap);
   this->splash_screen->show();
+  QThread::msleep(1000);
+  this->splash_screen->close();
 }
 
 auto MainWindow::createMainWidgets() -> void
@@ -52,14 +69,14 @@ auto MainWindow::createMainWidgets() -> void
   this->createMenuBar();
 
   QPixmap pixmap(tr(":/images/logo.png"));
-  this->test_widget = new TestWidget(this->timer);
+  this->test_widget = new TestWidget(this->timer, this->translation);
   this->label_logo = new QLabel(this);
   this->label_logo->setPixmap(pixmap);
-  this->main_btn = new QPushButton("Co robimy ?", this);
+  this->main_btn = new QPushButton(tr("%1").arg(this->translation.get_phrase("phrase_1")), this);
   this->btn_menu = new QMenu();
-  this->btn_menu->addAction("Otwórz test");
-  this->btn_menu->addAction("Pokaż log");
-  this->btn_menu->addAction("Kończymy");
+  this->btn_menu->addAction(tr("%1").arg(this->translation.get_phrase("phrase_2")));
+  this->btn_menu->addAction(tr("%1").arg(this->translation.get_phrase("phrase_3")));
+  this->btn_menu->addAction(tr("%1").arg(this->translation.get_phrase("phrase_4")));
   this->main_btn->setMenu(this->btn_menu);
   this->main_widget = new QWidget();
 
@@ -117,14 +134,14 @@ auto MainWindow::quitApp() -> void
 
 auto MainWindow::showAbout() -> void
 {
-  QMessageBox::about(this, tr("version %1").arg(HS_TEST_VERSION), tr("%1").arg(HS_TEST_VERSION_INFO));
+  QMessageBox::about(this, tr("%1 %2").arg(this->translation.get_phrase("phrase_7")).arg(HS_TEST_VERSION), tr("%1").arg(HS_TEST_VERSION_INFO));
 }
 
 auto MainWindow::showAboutQt() -> void { qApp->aboutQt(); }
 
 auto MainWindow::openTest() -> void
 {
-  QString test_file = QFileDialog::getOpenFileName(this, "Wybierz test: ", QDir::currentPath(), "Test (*.json);;All files (*)");
+  QString test_file = QFileDialog::getOpenFileName(this, tr("%1").arg(this->translation.get_phrase("phrase_5")), QDir::currentPath(), tr("Test (*.json);;%1 (*)").arg(this->translation.get_phrase("phrase_6")));
   if (!test_file.isEmpty())
     this->prepareTestJson(test_file);
 }
@@ -234,7 +251,7 @@ auto MainWindow::parseJSON(const QJsonDocument &doc) -> bool
   if (doc.isObject())
   {
     QJsonObject obj = doc.object();
-    this->setWindowTitle(tr("STRUKTURA TESTU OK: %1").arg(obj["PARAM_TITLE"].toString()));
+    this->setWindowTitle(tr("%1: %2").arg(this->translation.get_phrase("phrase_8")).arg(obj["PARAM_TITLE"].toString()));
     this->test_widget->createStartPage(obj["PARAM_TITLE"].toString(), obj["PARAM_TIME"].toString());
     this->countdown = obj["PARAM_TIME"].toString().toUInt() * 60;
 
@@ -257,7 +274,8 @@ auto MainWindow::parseJSON(const QJsonDocument &doc) -> bool
       {
         this->addSingleQuestionImageWidget(test_obj, rand_engine);
       }
-      else {
+      else
+      {
         return false;
       }
     }
@@ -283,14 +301,14 @@ auto MainWindow::updateTimer() -> void
   if (countdown == 0)
   {
     this->timer->stop();
-    this->statusBar->showMessage("Czas się skończył!");
+    this->statusBar->showMessage(tr("%1!").arg(this->translation.get_phrase("phrase_20")));
     qApp->beep();
     this->test_widget->test_end_now();
   }
   else
   {
     --countdown;
-    this->statusBar->showMessage("Czas: " + this->formatTime(countdown));
+    this->statusBar->showMessage(tr("%1: %2").arg(this->translation.get_phrase("phrase_21")).arg(this->formatTime(countdown)));
   }
 }
 
@@ -310,14 +328,14 @@ auto MainWindow::returnToMain() -> void
   }
   this->timer->stop();
   QPixmap pixmap(tr(":/images/logo.png"));
-  this->test_widget = new TestWidget(this->timer);
+  this->test_widget = new TestWidget(this->timer, this->translation);
   this->label_logo = new QLabel(this);
   this->label_logo->setPixmap(pixmap);
-  this->main_btn = new QPushButton("Co robimy ?", this);
+  this->main_btn = new QPushButton(this->translation.get_phrase("phrase_1"), this);
   this->btn_menu = new QMenu();
-  this->btn_menu->addAction("Otwórz test");
-  this->btn_menu->addAction("Pokaż log");
-  this->btn_menu->addAction("Kończymy");
+  this->btn_menu->addAction(this->translation.get_phrase("phrase_2"));
+  this->btn_menu->addAction(this->translation.get_phrase("phrase_3"));
+  this->btn_menu->addAction(this->translation.get_phrase("phrase_4"));
   this->main_btn->setMenu(this->btn_menu);
   this->main_widget = new QWidget();
   this->main_layout = new QGridLayout();

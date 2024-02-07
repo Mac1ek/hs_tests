@@ -11,7 +11,6 @@
 
 class MultipleQuestionImageWidget : public MultipleQuestionWidget
 {
-    Q_OBJECT
 
 private:
     QPixmap image;

@@ -11,6 +11,7 @@
 #include <QTimer>
 #include <vector>
 #include "QuestionWidget.hpp"
+#include "LangTranslation.hpp"
 
 class TestWidget : public QWidget
 {
@@ -28,6 +29,8 @@ class TestWidget : public QWidget
 
     std::vector<std::vector<std::pair<QString, QString>>> answers;
 
+    const LangTranslation &translation;
+
 private:
     auto create_widgets() -> void;
     auto create_layouts() -> void;
@@ -36,7 +39,7 @@ private:
 public:
     Q_OBJECT
 public:
-    TestWidget(QTimer *);
+    TestWidget(QTimer *, const LangTranslation &);
     ~TestWidget();
 
     auto add_questionBlock(QuestionWidget *block) -> void;

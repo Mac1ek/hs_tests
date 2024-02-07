@@ -1,6 +1,6 @@
 #include "TestWidget.hpp"
 
-TestWidget::TestWidget(QTimer *timer) : testTimer(timer)
+TestWidget::TestWidget(QTimer *timer, const LangTranslation &t) : testTimer(timer), translation(t)
 {
     this->create_widgets();
     this->connect_widgets();
@@ -18,17 +18,15 @@ auto TestWidget::create_widgets() -> void
     this->label_logo = new QLabel();
     this->label_logo->setPixmap(pixmap);
     this->central_widget = new QWidget();
-    this->main_btn = new QPushButton("Rozpocznij test");
-    this->next_btn = new QPushButton("NASTĘPNE PYTANIE");
+    this->main_btn = new QPushButton(tr("%1").arg(this->translation.get_phrase("phrase_12")));
+    this->next_btn = new QPushButton(tr("%1").arg(this->translation.get_phrase("phrase_13")));
     this->widgetsStack = new QStackedWidget();
     this->summary_question_success = new QLabel();
-    this->summary_question_success->setStyleSheet(tr("QLabel { color: #1D1; text-weight: bold; background: rgb(100, 100, 100); )}"));
-    this->summary_question_success->setWordWrap(true);
+    this->summary_question_success->setStyleSheet(tr("QLabel { color: #050; font-weight: bold; background: rgb(240, 240, 240); }"));
 }
 
 auto TestWidget::create_layouts() -> void
 {
-
     this->start_layout = new QGridLayout();
     this->main_layout = new QVBoxLayout();
 }
@@ -36,12 +34,12 @@ auto TestWidget::create_layouts() -> void
 auto TestWidget::createStartPage(const QString title, const QString t) -> void
 {
     this->title = new QLabel(tr("<b>%1</b>").arg(title));
-    this->time = new QLabel(tr("<b>CZAS TESTU</b>: %1 <b>MINUT</b>").arg(t.toUInt()));
+    this->time = new QLabel(tr("<b>%1</b>: %2 <b>%3</b>").arg(this->translation.get_phrase("phrase_14")).arg(t.toUInt()).arg(this->translation.get_phrase("phrase_15")));
     this->start_layout->addWidget(this->label_logo, 0, 0, Qt::AlignHCenter);
     this->start_layout->addWidget(this->title, 1, 0, Qt::AlignTop | Qt::AlignHCenter);
     this->start_layout->addWidget(this->time, 2, 0, Qt::AlignTop | Qt::AlignHCenter);
     this->start_layout->addWidget(this->main_btn, 3, 0, Qt::AlignTop | Qt::AlignHCenter);
-
+    this->start_layout->setRowStretch(0 | 1 | 2 | 3, 25);
     this->central_widget->setLayout(this->start_layout);
 
     this->widgetsStack->addWidget(this->central_widget);
@@ -123,11 +121,11 @@ auto TestWidget::addSumaryWindow() -> void
     double b = correct_summary;
     double summary_result = (a / b) * 100.0;
     this->summary_layout->addWidget(this->summary_img_label, 0, 0, Qt::AlignHCenter);
-    this->summary_test_info->setText(tr("ILOŚĆ PYTAŃ: %1, ILOŚĆ POPRAWNYCH ODPOWIEDZI <b>%2</b>, ILOŚĆ NIEPOPRAWNYCH ODPOWIEDZI; <b>%3</b>").arg(questions_num).arg(correct).arg(fail));
-    this->summary_question_success->setText(tr("W TEŚCIE ZNAJDOWAŁO SIĘ <b>%1</b> POPRAWNYCH ODPOWIEDZI, ODPOWIEDZIAŁEŚ NA <b>%2</b> PROCENT POPRAWNYCH ODPOWIEDZI (POPRAWNIE)").arg(correct_summary).arg(summary_result));
+    this->summary_test_info->setText(tr("%1: %2, %3 <b>%4</b>, %5; <b>%6</b>").arg(this->translation.get_phrase("phrase_9")).arg(questions_num).arg(this->translation.get_phrase("phrase_10")).arg(correct).arg(this->translation.get_phrase("phrase_11")).arg(fail));
+    this->summary_question_success->setText(tr("%1 <b>%2</b> %3, %4 <b>%5</b> %6").arg(this->translation.get_phrase("phrase_16")).arg(correct_summary).arg(this->translation.get_phrase("phrase_17")).arg(this->translation.get_phrase("phrase_18")).arg(summary_result).arg(this->translation.get_phrase("phrase_19")));
     this->summary_layout->addWidget(this->summary_test_info, 1, 0, Qt::AlignTop | Qt::AlignHCenter);
     this->summary_layout->addWidget(summary_question_success, 2, 0, Qt::AlignTop | Qt::AlignHCenter);
-
+    this->summary_layout->setRowStretch(0 | 1 | 2 | 3, 25);
     this->summary_widget->setLayout(this->summary_layout);
     this->widgetsStack->addWidget(this->summary_widget);
 }

@@ -17,7 +17,9 @@
 #include <QStatusBar>
 #include <QTimer>
 #include <QWidget>
+#include <QFile>
 #include <random>
+#include "LangTranslation.hpp"
 #include "QuestionWidget.hpp"
 #include "TestWidget.hpp"
 
@@ -50,9 +52,10 @@ private:
   QStackedWidget *stacketTestWidget;
   QStatusBar *statusBar;
   std::vector<std::pair<QString, QString>> answers;
-
+  LangTranslation translation;
   QTimer *timer;
   unsigned int countdown;
+  QFile settings;
 
 public:
   MainWindow(QWidget *parent = 0);
@@ -78,6 +81,7 @@ private:
   auto addMultipleQuestionImageWidget(const QJsonObject &, std::default_random_engine &) -> void;
   auto addSingleQuestionImageWidget(const QJsonObject &, std::default_random_engine &) -> void;
   auto showSplashScreen() -> void;
+  auto load_settings() -> void;
 
 public slots:
 

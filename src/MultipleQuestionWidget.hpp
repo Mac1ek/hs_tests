@@ -8,9 +8,8 @@
 #include <QLabel>
 #include <QPushButton>
 
-class MultipleQuestionWidget : public QuestionWidget
+class MultipleQuestionWidget : virtual public QuestionWidget
 {
-    Q_OBJECT
 
 public:
     auto create_layout() -> void;

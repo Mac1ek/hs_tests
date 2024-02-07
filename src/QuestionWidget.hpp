@@ -30,10 +30,12 @@ protected:
 public:
     QuestionWidget();
     virtual ~QuestionWidget();
-    virtual void add_title(const QString &) = 0;
-    virtual void add_question(const QString &) = 0;
-    virtual void create_layout() = 0;
+    virtual auto add_title(const QString &) -> void = 0;
+    virtual auto add_question(const QString &) -> void = 0;
+    virtual auto create_layout() -> void = 0;
     virtual auto get_answers() -> std::vector<QString> & = 0;
+public slots:
+    virtual void setAnswer(bool) = 0;
 };
 
 #endif
