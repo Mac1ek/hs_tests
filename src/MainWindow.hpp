@@ -82,6 +82,7 @@ private:
   auto addSingleQuestionImageWidget(const QJsonObject &, std::default_random_engine &) -> void;
   auto showSplashScreen() -> void;
   auto load_settings() -> void;
+  auto prepareStartTest(const QJsonObject &) -> void;
 
 public slots:
 

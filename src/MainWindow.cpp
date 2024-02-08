@@ -69,10 +69,10 @@ auto MainWindow::createMainWidgets() -> void
   this->createMenuActions();
   this->createMenuBar();
 
-  QPixmap pixmap(tr(":/images/logo.png"));
+  QPixmap logo_img(tr(":/images/logo.png"));
   this->test_widget = new TestWidget(this->timer, this->translation);
   this->label_logo = new QLabel(this);
-  this->label_logo->setPixmap(pixmap);
+  this->label_logo->setPixmap(logo_img);
   this->main_btn = new QPushButton(tr("%1").arg(this->translation.get_phrase("phrase_1")), this);
   this->btn_menu = new QMenu();
   this->btn_menu->addAction(tr("%1").arg(this->translation.get_phrase("phrase_2")));
@@ -107,6 +107,7 @@ auto MainWindow::connectActions() -> void
 }
 auto MainWindow::connectMenuFile() -> void
 {
+  this->connect(this->menu_file->actions()[0], SIGNAL(triggered()), this, SLOT(openTest()));
   this->connect(this->menu_file->actions()[2], SIGNAL(triggered()), this, SLOT(close()));
   this->connect(this->menu_file->actions()[3], SIGNAL(triggered()), this, SLOT(returnToMain()));
 }
@@ -231,6 +232,7 @@ auto MainWindow::addMultipleQuestionImageWidget(const QJsonObject &test_obj, std
     QJsonObject question = value.toObject();
     quest_block.push_back(question);
   }
+
   std::shuffle(quest_block.begin(), quest_block.end(), rand_engine);
 
   QuestionWidget *questions = new MultipleQuestionImageWidget(test_obj["image"].toString());
@@ -248,45 +250,39 @@ auto MainWindow::addMultipleQuestionImageWidget(const QJsonObject &test_obj, std
   this->test_widget->add_questionBlock(questions);
 }
 
+auto MainWindow::prepareStartTest(const QJsonObject &obj) -> void
+{
+  this->setWindowTitle(tr("%1: %2").arg(this->translation.get_phrase("phrase_8")).arg(obj["PARAM_TITLE"].toString()));
+  this->test_widget->createStartPage(obj["PARAM_TITLE"].toString(), obj["PARAM_TIME"].toString());
+  this->countdown = obj["PARAM_TIME"].toString().toUInt() * 60;
+}
+
 auto MainWindow::parseJSON(const QJsonDocument &doc) -> bool
 {
   if (doc.isObject())
   {
     QJsonObject obj = doc.object();
-    this->setWindowTitle(tr("%1: %2").arg(this->translation.get_phrase("phrase_8")).arg(obj["PARAM_TITLE"].toString()));
-    this->test_widget->createStartPage(obj["PARAM_TITLE"].toString(), obj["PARAM_TIME"].toString());
-    this->countdown = obj["PARAM_TIME"].toString().toUInt() * 60;
-
+    this->prepareStartTest(obj);
     QJsonArray jsonArray = obj["questions"].toArray();
+
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine rand_engine(seed);
 
     foreach (const QJsonValue &value, jsonArray)
     {
-      QJsonObject test_obj = value.toObject();
-      if (test_obj["type"] == "multiple")
-      {
-        this->addMultipleQuestionWidget(test_obj, rand_engine);
-      }
-      else if (test_obj["type"] == "multiple_image")
-      {
-        this->addMultipleQuestionImageWidget(test_obj, rand_engine);
-      }
-      else if (test_obj["type"] == "single")
-      {
-        this->addSingleQuestionImageWidget(test_obj, rand_engine);
-      }
+      QJsonObject quest = value.toObject();
+      if (quest["type"] == "multiple")
+        this->addMultipleQuestionWidget(quest, rand_engine);
+      else if (quest["type"] == "multiple_image")
+        this->addMultipleQuestionImageWidget(quest, rand_engine);
+      else if (quest["type"] == "single")
+        this->addSingleQuestionImageWidget(quest, rand_engine);
       else
-      {
         return false;
-      }
     }
     return true;
   }
-  else
-  {
-    return false;
-  }
+  return false;
 }
 
 auto MainWindow::addSingleQuestionImageWidget(const QJsonObject &test_obj, std::default_random_engine &rand_engine) -> void
