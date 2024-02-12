@@ -1,0 +1,308 @@
+{
+  "PARAM_TITLE": "TYTUŁ TESTU",
+  "PARAM_TIME": "5",
+  "questions": [
+    {
+      "type": "multiple",
+      "title": "PYTANIE 1 PYTANIE 1 PYTANIE 1 PYTANIE 1 :",
+      "quests": [
+        {
+          "ODPOWIEDZ ODPOWIEDZ 1.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 2.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 3.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 4.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 5.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 6.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 7.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 8.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 9": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 10.": "TRUE"
+        }
+      ]
+    },
+    {
+      "type": "multiple",
+      "title": "PYTANIE 2 PYTANIE 2 PYTANIE 2 PYTANIE 2 :",
+      "quests": [
+        {
+          "ODPOWIEDZ ODPOWIEDZ 1.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 2.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 3.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 4.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 5.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 6.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 7.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 8.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 9": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 10.": "TRUE"
+        }
+      ]
+    },
+    {
+      "type": "multiple",
+      "title": "PYTANIE 3 PYTANIE 3 PYTANIE 3 PYTANIE 3 :",
+      "quests": [
+        {
+          "ODPOWIEDZ ODPOWIEDZ 1.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 2.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 3.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 4.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 5.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 6.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 7.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 8.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 9": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 10.": "TRUE"
+        }
+      ]
+    },
+    {
+      "type": "multiple",
+      "title": "PYTANIE 4 PYTANIE 4 PYTANIE 4 PYTANIE 4 :",
+      "quests": [
+        {
+          "ODPOWIEDZ ODPOWIEDZ 1.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 2.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 3.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 4.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 5.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 6.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 7.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 8.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 9": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 10.": "TRUE"
+        }
+      ]
+    },
+    {
+      "type": "multiple",
+      "title": "PYTANIE 5 PYTANIE 5 PYTANIE 5 PYTANIE 5 :",
+      "quests": [
+        {
+          "ODPOWIEDZ ODPOWIEDZ 1.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 2.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 3.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 4.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 5.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 6.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 7.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 8.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 9": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 10.": "TRUE"
+        }
+      ]
+    },
+    {
+      "type": "multiple",
+      "title": "PYTANIE 6 PYTANIE 6 PYTANIE 6 PYTANIE 6 :",
+      "quests": [
+        {
+          "ODPOWIEDZ ODPOWIEDZ 1.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 2.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 3.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 4.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 5.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 6.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 7.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 8.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 9": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 10.": "TRUE"
+        }
+      ]
+    },
+    {
+      "type": "multiple",
+      "title": "PYTANIE 7 PYTANIE 7 PYTANIE 7 PYTANIE 7 :",
+      "quests": [
+        {
+          "ODPOWIEDZ ODPOWIEDZ 1.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 2.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 3.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 4.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 5.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 6.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 7.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 8.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 9": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 10.": "TRUE"
+        }
+      ]
+    },
+    {
+      "type": "multiple_image",
+      "image": "./image_1.jpg",
+      "title": "PYTANIE 8 PYTANIE 8 PYTANIE 8 PYTANIE 8 :",
+      "quests": [
+        {
+          "ODPOWIEDZ ODPOWIEDZ 1.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 2.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 3.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 4.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 5.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 6.": "TRUE"
+        }
+      ]
+    },
+    {
+      "type": "multiple_image",
+      "image": "./image_2.png",
+      "title": "Graf przepływu zawiera następujące pętle naturalne:",
+      "quests": [
+        {
+          "ODPOWIEDZ ODPOWIEDZ 1.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 2.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 3.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 4.": "FALSE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 5.": "TRUE"
+        },
+        {
+          "ODPOWIEDZ ODPOWIEDZ 6.": "TRUE"
+        }
+      ]
+    }
+  ]
+}
