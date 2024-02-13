@@ -6,11 +6,10 @@
 
 #ifdef _WIN32
 int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
-{
 #else
 int main(int argc, char *argv[])
 #endif
-  {
+{
 #ifdef _WIN32
     QApplication app(__argc, __argv);
 #else
